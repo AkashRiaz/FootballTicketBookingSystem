@@ -1,3 +1,5 @@
+create database ticketSystem
+
 -- =========================================================================
 -- SYSTEM: Football Ticket Booking System Database Setup Template
 -- DESCRIPTION: Pseudo-DDL Template for Table Creation & Data Insertion
@@ -113,13 +115,16 @@ INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status
 (504, 2, 101, NULL, NULL, 150.00),
 (505, 3, 102, 'C-20', 'Pending', 120.00);
 
+
+
 -- =====================
 -- Query 1
 -- =====================
 SELECT match_id, fixture, base_ticket_price 
-FROM matches
+FROM Matches
 WHERE tournament_category = 'Champions League'
     AND match_status = 'Available';
+
 
 
 -- =====================
@@ -130,7 +135,7 @@ FROM Users
 WHERE full_name ILIKE 'Tanvir%'
    OR full_name ILIKE '%Haque%';
 
-   -- =====================
+-- =====================
 -- Query 3
 -- =====================
 SELECT 
@@ -138,7 +143,7 @@ SELECT
     user_id,
     match_id,
     COALESCE(payment_status::TEXT, 'Action Required') AS systematic_status
-FROM bookings
+FROM Bookings
 WHERE payment_status IS NULL;
 
 -- =====================
@@ -176,3 +181,12 @@ WHERE total_cost > (
     SELECT AVG(total_cost)
     FROM Bookings
 );
+
+-- =====================
+-- Query 7
+-- =====================
+
+SELECT match_id, fixture,base_ticket_price
+FROM Matches
+ORDER BY base_ticket_price DESC
+LIMIT 2 OFFSET 1;
